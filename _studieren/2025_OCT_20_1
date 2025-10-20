@@ -1,0 +1,53 @@
+#include <STUDY_IS_STUDIEREN>
+
+링크드 리스트 시뮬레이션 기법 (linked list simulation)
+FOR! example_)
+index | prev | next
+0      |  -1   |  1 
+1      |   0   |  2
+2      |   1   |  3
+3      |   2   |  4
+4      |   3   |  -1
+ index기준 prev랑 next를 활용하는 기법
+
+2번 인덱스에서 3번 인덱스로 가려고 한다면
+if (U is 2) : cuser = next[2]
+ 다음으로, 그곳에서 2번노드와 연결을 끊는 다면. (단_ 당연히도 이건 서로 연결노드를 사용하는 것이므로 -1이 나오는 경우를 조심해야한다.)
+
+1번 인덱스에서 next는 3이되고 3번 인덱스에서 prev는 1이 될테다.
+
+따라서.. next[prev[2]] = next[2]; 가 되고
+prev[next[2]] = prev[2];가 된다 
+ slice한 index는 stack이나 vector나 저장해두고
+
+2번 index가 사라졌으니 다음 curser로 넘겨야 한다( 일단, 아래에 있는 커서라고 가정을 하자)
+그러면 당연하게 (자명하다.._) curser = next[2] 임을 알 수있다 (-1인 경우를 조심하여라_ -1이면 up을 해주어야 한다)
+
+다음으로, restore을 하려고 하면(이, 경우 2라고 하자)
+
+stack이나 vector에 저장된 index를 가지고와 linked 해주면 된다!
+
+참고1)
+index | prev | next
+0      |  -1   |  1 
+1      |   0   |  3
+-----------------------
+2      |   1   |  3          <- restore해야할 값들
+------------------------------
+3      |   1   |  4
+4      |   3   |  -1
+
+prev[next[restore]] = restore;
+next[prev[restore]] = restore; 해주면 원상 복구 됨을 알 수 있다.
+
+In_conclusion)
+
+index | prev | next
+0      |  -1   |  1 
+1      |   0   |  2
+2      |   1   |  3
+3      |   2   |  4
+4      |   3   |  -1
+
+return finish;
+------------------------------------------------------------------------------
