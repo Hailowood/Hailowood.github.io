@@ -1,1 +1,33 @@
-STUDY IS STUDIEREN
+#include <STUDY_IS_STUDIEREN>
+
+Matrix_chain_mutiplication :
+이것도 catalan_number의 원리를 생각하면 간단하다. (diagonal 의 중심을 맞춰 생각하면 쉽다!)
+행렬들의 곱셈을 저장해줄 2 dimention vector(이하 dp 라 하자.)를 생성해주고, 각각의 곱의 순서에 따른 곱의 결과를 저장할 1dimention vector(이하 d라 하자.)를 생성해준다.
+
+And then, i는 A라는 행렬이 있을때 A1의 첫번째 값이 되고, j는 A1 의 두번째 값과 A2 의 첫번째 값과 같음을 알 수 있다.
+dp[i][j]의 i = j (수학적으로) 일때는 값이 0임은 자명하고. (따라서 dp[i][j] = 0 이다.)
+
+dp[i][j] 는 dp[i][k] + dp[k+1][j]로 나누어 짐을 알수 있다 총연산의 합을 구하기 위해서는 곱으로 연결시켜줄 함수가 필요하다. 이는 밑에 식과 같다
+(1.1) :  dp[i][k] + dp[k+1][j] + dp[i-1](처음 행렬의 row의 수) * dp[k](처음행렬의 column이자 마지막 행렬의 row) * dp[j](마지막 행렬의 column의 수)
+자명하게도 k의 역할을 다하기 위해서는 k의 범위가 [i,k+1]임을 알 수 있다.
+
+따라서, k에 의해 d는 곱의 연산의 책임을 가지게 된다. 따라서 k의 값은 index 0을 제외하고 k 이전의 row의 값과 column의 값이 동일한 값을 저장하게 된다.
+이는 앞서 말한 규칙에 의거해, for [0,matrix_size) d[i+1] = matrix[i][1]임이 됨을 알 수 있다.
+
+이제 catlan_number의 원리에 착안한 diagonal를 사용해주면 된다!
+for(int diagonal = 0; diagonal < matrix_size; diagonal++) 는 대각선의 움직임이다 (당연하게도..) 대각선의 움직임에 따라 i,j의 값이 변함으로 증가는 [0, matrix_size) 임이 자명하다.
+	for(int i = 1; i <= matrix_size - diagonal; i++) 
+		j = i +n;
+ (이는 i가 움직을때 j가 움직이면서 대각선으로 모든 값을 계산해주기 위함이다!) hint)우리가 구하는 것은 dp[1][matrix_size]임을 생각해보면 된다.
+ 
+다음으로, 만약 i = j 일때 모든 값을 0으로 만들어 준다
+그것이 아니라면 dp[i][j] = Max_number ( #define Max_number 1e9 과 같이 정의 해주는게 편하다.) 을 해준다. (최소값을 비교하기 위함이다.)
+그후에, (1.1)에서 새운 함수식을 그대로 k의 값에 의거해 작성하면 된다.
+ for(int k = i ; k<= j-1; k++) { (1,1)} 와 값이 말이다.
+
+그렇게 되면 전체를 recrusion 하며 1~6까지 곱연산의 횟수의 최소를 구해준다!
+우리가 구하는 것은 전체의 횟수이므로 dp[1][matrix_size]가 그 값의 최종 결과임을 알 수 있다! 
+return finish!;
+--------------------------------------------------------------------------------------------------------------------------------
+ 
+
