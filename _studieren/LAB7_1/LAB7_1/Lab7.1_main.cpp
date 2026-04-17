@@ -1,0 +1,99 @@
+/*
+ * 파일명 : Lab7.1_main.cpp
+ * 프로그램의 목적 및 기능 :
+ *  - 파일로부터 행렬 데이터를 입력받습니다.
+ *  - 행렬의 덧셈, 뺄셈, 곱셈, 전치 연산을 수행합니다.
+ *  - 연산 결과를 파일에 저장하고 출력합니다.
+ * ==========================================================================================================
+ * AUTHOR : 변정호
+ * Program completion Date : 2026.04.17
+ * ==========================================================================================================
+*/
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include "Mtrx.h"
+#include "MtrxArray.h"
+using namespace std;
+
+#define NUM_MTRX 8   // 사용할 행렬 객체의 개수
+
+int main()
+{
+    /* 파일 입출력 스트림 객체 선언 */
+    ifstream fin;   // 입력 파일 스트림
+    ofstream fout;  // 출력 파일 스트림
+
+    int n_row, n_col; // (사용하지 않지만) 행렬 크기 저장용 변수
+
+    /* 입력 파일 열기 */
+    fin.open("Matrix_ABC.txt");
+    if (fin.fail())
+    {
+        cout << "Error in opening input data file !!" << endl;
+        exit(1); // 파일 열기 실패 시 프로그램 종료
+    }
+
+    /* 출력 파일 열기 */
+    fout.open("Result.txt");
+    if (fout.fail())
+    {
+        cout << "Error in opening output data file !!" << endl;
+        exit(1); // 파일 열기 실패 시 프로그램 종료
+    }
+
+    /* 행렬 배열 객체 생성 */
+    MtrxArray mtrx(NUM_MTRX);
+
+    /* 파일에서 3개의 행렬 입력 */
+    fin >> mtrx[0] >> mtrx[1] >> mtrx[2];
+
+    /* 각 행렬의 이름 설정 */
+    mtrx[0].set_name("mtrx[0] =");
+    mtrx[1].set_name("mtrx[1] =");
+    mtrx[2].set_name("mtrx[2] =");
+
+    /* 입력 받은 행렬 출력 */
+    fout << mtrx[0] << endl;
+    fout << mtrx[1] << endl;
+    fout << mtrx[2] << endl;
+
+    /* 행렬 덧셈 */
+    mtrx[3] = mtrx[0] + mtrx[1];
+    mtrx[3].set_name("mtrx[3] = mtrx[0] + mtrx[1] =");
+    fout << mtrx[3] << endl;
+
+    /* 행렬 뺄셈 */
+    mtrx[4] = mtrx[0] - mtrx[1];
+    mtrx[4].set_name("mtrx[4] = mtrx[0] - mtrx[1] =");
+    fout << mtrx[4] << endl;
+
+    /* 행렬 곱셈 */
+    mtrx[5] = mtrx[0] * mtrx[2];
+    mtrx[5].set_name("mtrx[5] = mtrx[0] * mtrx[2] =");
+    fout << mtrx[5] << endl;
+
+    /* 전치 행렬 (transpose) */
+    mtrx[6] = ~mtrx[0]; // 연산자 ~ 오버로딩 사용
+    mtrx[6].set_name("mtrx[6] = ~mtrx[0] (transposed matrix) =");
+    fout << mtrx[6] << endl;
+
+    /* 대입 연산 (복사) */
+    mtrx[7] = mtrx[0];
+    mtrx[7].set_name("mtrx[7] = mtrx[0] =");
+    fout << mtrx[7] << endl;
+
+    /* 행렬 비교 */
+    if (mtrx[0] == mtrx[7])
+        fout << "mtrx[0] and mtrx[7] are equal.\n";
+
+    if (mtrx[0] != mtrx[1])
+        fout << "mtrx[0] and mtrx[1] are not equal.\n";
+
+    /* 파일 닫기 */
+    fin.close();
+    fout.close();
+
+    return 0;
+}
