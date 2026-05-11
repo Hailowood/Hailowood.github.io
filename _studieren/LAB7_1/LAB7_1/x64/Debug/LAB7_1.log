@@ -1,7 +1,0 @@
-﻿  Lab7.1_main.cpp
-C:\Users\bjhmm\OneDrive\바탕 화면\LAB7\LAB7_1\LAB7_1\Lab7.1_main.cpp(28,9): warning C4101: 'n_row' :참조되지 않은 지역 변수입니다.
-C:\Users\bjhmm\OneDrive\바탕 화면\LAB7\LAB7_1\LAB7_1\Lab7.1_main.cpp(28,16): warning C4101: 'n_col' :참조되지 않은 지역 변수입니다.
-  Mtrx.cpp
-  MtrxArray.cpp
-  코드를 생성하고 있습니다...
-  LAB7_1.vcxproj -> C:\Users\bjhmm\OneDrive\바탕 화면\LAB7\LAB7_1\x64\Debug\LAB7_1.exe
